@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(45deg, #f3ec78, #af4261);
+    text-align: center;
+    padding: 15px;
+    color: white; /* zmieniamy kolor tekstu na biały, aby był widoczny na ciemnym tle */
+}
+
+.title {
+    font-size: 4em;
+    color: white;
+    margin: 0;
+}
+
+.message {
+    font-size: 1.5em;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.link:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2em;
+    }
+
+    .message {
+        font-size: 1em;
+    }
+
+    .link {
+        padding: 5px 10px;
+    }
+}

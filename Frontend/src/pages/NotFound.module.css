@@ -7,7 +7,6 @@
     background: linear-gradient(45deg, #f3ec78, #af4261);
     text-align: center;
     padding: 15px;
-    color: white; /* zmieniamy kolor tekstu na biały, aby był widoczny na ciemnym tle */
 }
 
 .title {

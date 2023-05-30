@@ -8,8 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "lint": "eslint --ext .js,.cjs,.ts,.tsx .",
-    "lint:fix": "eslint --ext .js,.cjs,.ts,.tsx . --fix",
+    "lint": "eslint \"src/**/*.{js,jsx,cjs,ts,tsx}\" --quiet",
     "format": "prettier --write \"src/**/*.{js,jsx,cjs,ts,tsx}\"",
     "typecheck": "tsc --noEmit"
   },

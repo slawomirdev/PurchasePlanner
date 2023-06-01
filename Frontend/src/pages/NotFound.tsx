@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
-import styles from './NotFound.module.css';
+import { Container, Title, Message, StyledButton } from './NotFound.styles';
 
 const NotFound = () => {
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>404</h1>
-      <p className={styles.message}>Strona, której szukasz, nie istnieje.</p>
-      <Link to="/" className={styles.link}>
-        Go Home
-      </Link>
-    </div>
+    <Container>
+      <Title variant="h1">404</Title>
+      <Message variant="h2">Strona, której szukasz, nie istnieje.</Message>
+      <StyledButton variant="contained">
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          Wróć do Strony Głównej
+        </Link>
+      </StyledButton>
+    </Container>
   );
 };
 

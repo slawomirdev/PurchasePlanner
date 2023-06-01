@@ -2,9 +2,6 @@ import React from 'react';
 import { Box, IconButton, useTheme } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import CurrentListContainer from '../containers/CurrentListContainer';
-import PastListsContainer from '../containers/PastListsContainer';
-import SummaryContainer from '../containers/SummaryContainer';
 import { ColorModeContext } from '../contexts/colorModeContext';
 
 const Home: React.FC = () => {

@@ -1,8 +1,9 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useCookies } from 'react-cookie';
-import { Button, TextField, Box, Typography, Paper, Fade } from '@mui/material';
+import { Button, TextField, Typography, Fade, Paper } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { AuthContainer, AuthForm, SwitchBox } from './Auth.styles';
 
 const Auth = () => {
   const [_, setCookie] = useCookies(['Email', 'AuthToken']);
@@ -54,29 +55,20 @@ const Auth = () => {
   const submitButtonText = isLogIn ? 'Zaloguj się' : 'Zarejestruj się';
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-      }}
-    >
+    <AuthContainer>
       <Paper
-        sx={{
-          padding: '2rem',
-          minWidth: { xs: 'auto', sm: '400px' },
-          minHeight: { xs: 'auto', sm: '400px' },
-          maxWidth: '100%',
-          width: '100%',
-          boxShadow: isSmallScreen ? 'none' : theme.shadows[3],
-        }}
-        elevation={isSmallScreen ? 0 : 3}
+          sx={{
+            padding: '2rem',
+            minWidth: { xs: 'auto', sm: '400px' },
+            minHeight: { xs: 'auto', sm: '400px' },
+            maxWidth: '100%',
+            width: '100%',
+            boxShadow: isSmallScreen ? 'none' : theme.shadows[3],
+          }}
+          elevation={isSmallScreen ? 0 : 3}
       >
-        <form
+        <AuthForm
           onSubmit={(e) => handleSubmit(e, isLogIn ? 'login' : 'signup')}
-          style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
         >
           <Typography align="center" variant="h6">
             {formTitle}
@@ -120,10 +112,8 @@ const Auth = () => {
               </Typography>
             </Fade>
           )}
-        </form>
-        <Box
-          sx={{ mt: '1rem', display: 'flex', justifyContent: 'space-between' }}
-        >
+        </AuthForm>
+        <SwitchBox>
           {!isLogIn && (
             <Button variant="text" onClick={() => viewLogin(true)} fullWidth>
               Masz już konto? Zaloguj się
@@ -134,9 +124,9 @@ const Auth = () => {
               Nie masz konta? Zarejestruj się
             </Button>
           )}
-        </Box>
+        </SwitchBox>
       </Paper>
-    </Box>
+    </AuthContainer>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import ShoppingList from '../containers/ShoppingList';
+import ShoppingList from '../containers/Dashboard';
 import { useCookies } from 'react-cookie';
 import Auth from '../components/Auth/Auth';
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle';
@@ -9,17 +9,13 @@ const Home: React.FC = () => {
   const authToken = cookies.AuthToken;
 
   return (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-    >
+    <>
       {!authToken && <Auth />}
       {authToken && (
-        <div style={{ display: 'flex' }}>
           <ShoppingList />
-        </div>
       )}
       <ThemeToggle />
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
-import { createTheme } from '@mui/material';
+import { createTheme, Theme  } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import {
   ColorModeContextProps,
@@ -28,22 +28,41 @@ export const ColorModeProvider = ({ children }: ColorModeProviderProps) => {
     []
   );
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-        typography: {
-          fontFamily: 'Nunito, Arial, sans-serif',
-          fontWeightLight: 300,
-          fontWeightRegular: 400,
-          fontWeightMedium: 500,
-          fontWeightBold: 700,
-        },
-      }),
-    [mode]
-  );
+    const theme: Theme = useMemo(() => {
+        const baseTheme = {
+            typography: {
+                fontFamily: 'Nunito, Arial, sans-serif',
+                fontWeightLight: 300,
+                fontWeightRegular: 400,
+                fontWeightMedium: 500,
+                fontWeightBold: 700,
+            },
+        };
+
+        if (mode === 'dark') {
+            return createTheme({
+                ...baseTheme,
+                palette: {
+                    mode,
+                    background: {
+                        default: '#282c34',
+                        paper: '#3a3f4b',
+                    },
+                },
+            });
+        } else {
+            return createTheme({
+                ...baseTheme,
+                palette: {
+                    mode,
+                    background: {
+                        default: '#f4f6f8',
+                        paper: '#ffffff',
+                    },
+                },
+            });
+        }
+    }, [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>

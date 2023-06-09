@@ -57,15 +57,15 @@ const Auth = () => {
   return (
     <AuthContainer>
       <Paper
-          sx={{
-            padding: '2rem',
-            minWidth: { xs: 'auto', sm: '400px' },
-            minHeight: { xs: 'auto', sm: '400px' },
-            maxWidth: '100%',
-            width: '100%',
-            boxShadow: isSmallScreen ? 'none' : theme.shadows[3],
-          }}
-          elevation={isSmallScreen ? 0 : 3}
+        sx={{
+          padding: '2rem',
+          minWidth: { xs: 'auto', sm: '400px' },
+          minHeight: { xs: 'auto', sm: '400px' },
+          maxWidth: '100%',
+          width: '100%',
+          boxShadow: isSmallScreen ? 'none' : theme.shadows[3],
+        }}
+        elevation={isSmallScreen ? 0 : 3}
       >
         <AuthForm
           onSubmit={(e) => handleSubmit(e, isLogIn ? 'login' : 'signup')}

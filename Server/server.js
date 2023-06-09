@@ -34,11 +34,27 @@ app.get('/lists/:listId/items', async (req, res) => {
 
 // create a new shopping list
 app.post('/lists', async(req, res) => {
-    const { user_id, name, date_created } = req.body
+    const { user_email, name, date_created } = req.body
     try {
-        const newList = await pool.query(`INSERT INTO shopping_lists(user_id, name, date_created) VALUES($1, $2, $3) RETURNING *`,
-            [user_id, name, date_created])
+        const newList = await pool.query(`INSERT INTO shopping_lists(user_email, name, date_created) VALUES($1, $2, $3) RETURNING *`,
+            [user_email, name, date_created])
         res.json(newList.rows[0])
+    } catch (err) {
+        console.error(err)
+    }
+})
+
+// delete a shopping list and its items
+app.delete('/lists/:listId', async (req, res) => {
+    const { listId } = req.params
+    try {
+        // delete items first to maintain integrity
+        await pool.query('DELETE FROM list_items WHERE list_id = $1', [listId])
+
+        // delete the list itself
+        await pool.query('DELETE FROM shopping_lists WHERE id = $1', [listId])
+
+        res.json({message: "List and related items deleted successfully!"})
     } catch (err) {
         console.error(err)
     }
@@ -56,6 +72,18 @@ app.post('/lists/:listId/items', async(req, res) => {
         console.error(err)
     }
 })
+
+// delete a specific item from a shopping list
+app.delete('/lists/:listId/items/:itemId', async (req, res) => {
+    const { listId, itemId } = req.params;
+    try {
+        await pool.query('DELETE FROM list_items WHERE id = $1', [itemId]);
+        res.json({ message: 'Item deleted successfully!' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+});
 
 // signup
 app.post('/signup', async (req, res) => {

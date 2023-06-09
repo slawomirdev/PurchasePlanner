@@ -9,24 +9,31 @@ const ThemeToggle: React.FC = () => {
   const colorMode = React.useContext(ColorModeContext);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: 'background.default',
-        color: 'text.primary',
-        borderRadius: 1,
-        p: 3,
-        position: 'fixed',
-        right: 0,
-        top: 0,
-      }}
-    >
+    // <Box
+    //   sx={{
+    //     display: 'flex',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     bgcolor: 'background.default',
+    //     color: 'text.primary',
+    //     borderRadius: 1,
+    //     p: 3,
+    //     position: 'fixed',
+    //     right: 0,
+    //     top: 0,
+    //   }}
+    // >
       <IconButton
-        sx={{ ml: 1 }}
+        // sx={{ ml: 1 }}
         onClick={colorMode.toggleColorMode}
         color="inherit"
+        sx={{
+            p: 1,
+            m: 1,
+            position: 'fixed',
+            right: 0,
+            top: 0,
+        }}
       >
         {theme.palette.mode === 'dark' ? (
           <Brightness7Icon />
@@ -34,7 +41,7 @@ const ThemeToggle: React.FC = () => {
           <Brightness4Icon />
         )}
       </IconButton>
-    </Box>
+    // </Box>
   );
 };
 

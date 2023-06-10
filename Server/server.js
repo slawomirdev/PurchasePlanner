@@ -95,6 +95,29 @@ app.delete('/lists/:listId/items/:itemId', async (req, res) => {
     }
 });
 
+app.get('/summary/:email', async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        const result = await pool.query(`
+      SELECT EXTRACT(YEAR FROM date_added) as year, EXTRACT(MONTH FROM date_added) as month, SUM(item_price) as total
+      FROM list_items
+      WHERE list_id IN (
+        SELECT id
+        FROM shopping_lists
+        WHERE user_email = $1
+      )
+      GROUP BY year, month
+      ORDER BY year DESC, month DESC
+    `, [email]);
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
+
 // signup
 app.post('/signup', async (req, res) => {
     const { email, password } = req.body

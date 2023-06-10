@@ -14,9 +14,11 @@ import {
   IconButton,
   ListItemButton,
   Box,
+  Divider,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../Api/api';
+import ExpenseSummary from '../components/ExpenseSummary/ExpenseSummary';
 
 type Dashboard = {
   name: string;
@@ -80,7 +82,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ my: '2rem', maxHeight: '60vh', overflow: 'auto' }}>
+    <Container maxWidth="sm" sx={{ my: '2rem' }}>
       <Typography align="center" variant="h4" component="h2" gutterBottom>
         Twoje listy zakupów
       </Typography>
@@ -111,7 +113,7 @@ const Dashboard = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <List>
+        <List sx={{ height: '400px', overflow: 'auto', my: '2rem' }}>
           {lists.map(({ id, name, date_created }) => (
             <Card style={{ margin: '10px 0' }} key={id}>
               <ListItemButton onClick={() => handleListClick(id)}>
@@ -135,6 +137,8 @@ const Dashboard = () => {
           ))}
         </List>
       )}
+      <Divider />
+      <ExpenseSummary lists={lists} />
     </Container>
   );
 };

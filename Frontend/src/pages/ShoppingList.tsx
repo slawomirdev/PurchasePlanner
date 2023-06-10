@@ -95,7 +95,6 @@ const ShoppingList: React.FC = () => {
     navigate('/');
   };
 
-
   return (
     <Box sx={{ width: '100%', padding: 2 }}>
       <Grid

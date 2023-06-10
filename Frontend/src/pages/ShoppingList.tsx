@@ -104,11 +104,16 @@ const ShoppingList: React.FC = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item>
-          <IconButton onClick={handleGoBack}>
-            <ArrowBackIcon />
-          </IconButton>
-          <Typography variant="h4">{listName}</Typography>
+        <Grid item xs={12}>
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <IconButton
+              onClick={handleGoBack}
+              sx={{ position: 'absolute', left: 0 }}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="h4">{listName}</Typography>
+          </Box>
         </Grid>
         <Grid item>
           <TextField
@@ -118,6 +123,7 @@ const ShoppingList: React.FC = () => {
             variant="outlined"
             fullWidth
             size="small"
+            inputProps={{ maxLength: 30 }}
           />
         </Grid>
         <Grid item>
@@ -129,6 +135,7 @@ const ShoppingList: React.FC = () => {
             variant="outlined"
             fullWidth
             size="small"
+            inputProps={{ maxLength: 30 }}
           />
         </Grid>
         <Grid item>

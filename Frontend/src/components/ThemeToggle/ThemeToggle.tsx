@@ -9,17 +9,7 @@ const ThemeToggle: React.FC = () => {
   const colorMode = React.useContext(ColorModeContext);
 
   return (
-    <IconButton
-      onClick={colorMode.toggleColorMode}
-      color="inherit"
-      sx={{
-        p: 1,
-        m: 1,
-        position: 'fixed',
-        right: 0,
-        top: 0,
-      }}
-    >
+    <IconButton onClick={colorMode.toggleColorMode} color="inherit">
       {theme.palette.mode === 'dark' ? (
         <Brightness7Icon />
       ) : (

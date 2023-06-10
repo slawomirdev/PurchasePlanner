@@ -67,6 +67,9 @@ const Auth = () => {
             maxWidth: '100%',
             width: '100%',
             boxShadow: isSmallScreen ? 'none' : theme.shadows[3],
+            backgroundColor: isSmallScreen
+              ? theme.palette.background.default
+              : '',
           }}
           elevation={isSmallScreen ? 0 : 3}
         >

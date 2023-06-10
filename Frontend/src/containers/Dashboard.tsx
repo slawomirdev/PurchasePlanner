@@ -95,6 +95,7 @@ const Dashboard = () => {
             variant="outlined"
             size="small"
             fullWidth
+            inputProps={{ maxLength: 30 }}
           />
         </Grid>
         <Grid item xs={12} sm={4} md={3}>

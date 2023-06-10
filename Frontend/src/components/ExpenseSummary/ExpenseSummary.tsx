@@ -51,6 +51,9 @@ const ExpenseSummary = ({ lists }: any) => {
     'Grudzień',
   ];
 
+  const uniqueYears = Array.from(new Set(summary.map(item => item.year)));
+  const uniqueMonths = Array.from(new Set(summary.map(item => item.month)));
+
   return (
     <Box
       sx={{
@@ -77,10 +80,10 @@ const ExpenseSummary = ({ lists }: any) => {
           onChange={handleChangeMonth}
           size="small"
         >
-          {summary.map((item, index) => (
-            <MenuItem key={index} value={item.month}>
-              {monthNames[item.month - 1]}
-            </MenuItem>
+          {uniqueMonths.map((month) => (
+              <MenuItem key={month} value={month}>
+                {monthNames[month - 1]}
+              </MenuItem>
           ))}
         </Select>
         <Select
@@ -88,10 +91,10 @@ const ExpenseSummary = ({ lists }: any) => {
           onChange={handleChangeYear}
           size="small"
         >
-          {summary.map((item, index) => (
-            <MenuItem key={index} value={item.year}>
-              {item.year}
-            </MenuItem>
+          {uniqueYears.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
           ))}
         </Select>
       </Box>

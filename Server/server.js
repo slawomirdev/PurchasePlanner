@@ -21,6 +21,16 @@ app.get('/lists/:userEmail', async (req, res) => {
     }
 })
 
+app.get('/lists/single/:listId', async (req, res) => {
+    const { listId } = req.params;
+    try {
+        const list = await pool.query('SELECT * FROM shopping_lists WHERE id = $1', [listId]);
+        res.json(list.rows[0]);
+    } catch (err) {
+        console.error(err);
+    }
+});
+
 // get all items in a shopping list
 app.get('/lists/:listId/items', async (req, res) => {
     const { listId } = req.params

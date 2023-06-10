@@ -11,9 +11,7 @@ const Home: React.FC = () => {
   return (
     <>
       {!authToken && <Auth />}
-      {authToken && (
-          <ShoppingList />
-      )}
+      {authToken && <ShoppingList />}
       <ThemeToggle />
     </>
   );

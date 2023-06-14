@@ -21,6 +21,16 @@ app.get('/lists/:userEmail', async (req, res) => {
     }
 })
 
+app.get('/lists/single/:listId', async (req, res) => {
+    const { listId } = req.params;
+    try {
+        const list = await pool.query('SELECT * FROM shopping_lists WHERE id = $1', [listId]);
+        res.json(list.rows[0]);
+    } catch (err) {
+        console.error(err);
+    }
+});
+
 // get all items in a shopping list
 app.get('/lists/:listId/items', async (req, res) => {
     const { listId } = req.params
@@ -34,11 +44,27 @@ app.get('/lists/:listId/items', async (req, res) => {
 
 // create a new shopping list
 app.post('/lists', async(req, res) => {
-    const { user_id, name, date_created } = req.body
+    const { user_email, name, date_created } = req.body
     try {
-        const newList = await pool.query(`INSERT INTO shopping_lists(user_id, name, date_created) VALUES($1, $2, $3) RETURNING *`,
-            [user_id, name, date_created])
+        const newList = await pool.query(`INSERT INTO shopping_lists(user_email, name, date_created) VALUES($1, $2, $3) RETURNING *`,
+            [user_email, name, date_created])
         res.json(newList.rows[0])
+    } catch (err) {
+        console.error(err)
+    }
+})
+
+// delete a shopping list and its items
+app.delete('/lists/:listId', async (req, res) => {
+    const { listId } = req.params
+    try {
+        // delete items first to maintain integrity
+        await pool.query('DELETE FROM list_items WHERE list_id = $1', [listId])
+
+        // delete the list itself
+        await pool.query('DELETE FROM shopping_lists WHERE id = $1', [listId])
+
+        res.json({message: "List and related items deleted successfully!"})
     } catch (err) {
         console.error(err)
     }
@@ -56,6 +82,41 @@ app.post('/lists/:listId/items', async(req, res) => {
         console.error(err)
     }
 })
+
+// delete a specific item from a shopping list
+app.delete('/lists/:listId/items/:itemId', async (req, res) => {
+    const { listId, itemId } = req.params;
+    try {
+        await pool.query('DELETE FROM list_items WHERE id = $1', [itemId]);
+        res.json({ message: 'Item deleted successfully!' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+});
+
+app.get('/summary/:email', async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        const result = await pool.query(`
+      SELECT EXTRACT(YEAR FROM date_added) as year, EXTRACT(MONTH FROM date_added) as month, SUM(item_price) as total
+      FROM list_items
+      WHERE list_id IN (
+        SELECT id
+        FROM shopping_lists
+        WHERE user_email = $1
+      )
+      GROUP BY year, month
+      ORDER BY year DESC, month DESC
+    `, [email]);
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
 
 // signup
 app.post('/signup', async (req, res) => {

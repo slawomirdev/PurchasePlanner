@@ -16,6 +16,6 @@ CREATE TABLE list_items (
   id SERIAL PRIMARY KEY,
   list_id INTEGER REFERENCES shopping_lists(id),
   item_name VARCHAR(255) NOT NULL,
-  item_price DECIMAL(6, 2) NOT NULL,
+  item_price DECIMAL(10, 2) NOT NULL,
   date_added DATE NOT NULL
 );

@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useCookies } from 'react-cookie';
-import { Button, TextField, Typography, Fade, Paper } from '@mui/material';
+import { Button, TextField, Typography, Fade, Paper, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AuthContainer, AuthForm, SwitchBox } from './Auth.styles';
@@ -55,8 +55,11 @@ const Auth = () => {
   const submitButtonText = isLogIn ? 'Zaloguj się' : 'Zarejestruj się';
 
   return (
-    <AuthContainer>
-      <Paper
+    <Box
+      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+    >
+      <AuthContainer>
+        <Paper
           sx={{
             padding: '2rem',
             minWidth: { xs: 'auto', sm: '400px' },
@@ -64,69 +67,73 @@ const Auth = () => {
             maxWidth: '100%',
             width: '100%',
             boxShadow: isSmallScreen ? 'none' : theme.shadows[3],
+            backgroundColor: isSmallScreen
+              ? theme.palette.background.default
+              : '',
           }}
           elevation={isSmallScreen ? 0 : 3}
-      >
-        <AuthForm
-          onSubmit={(e) => handleSubmit(e, isLogIn ? 'login' : 'signup')}
         >
-          <Typography align="center" variant="h6">
-            {formTitle}
-          </Typography>
-          <TextField
-            type="email"
-            label="Email"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setEmail(e.target.value)
-            }
-            variant="outlined"
-            size="small"
-          />
-          <TextField
-            type="password"
-            label="Hasło"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-            variant="outlined"
-            size="small"
-          />
-          {!isLogIn && (
+          <AuthForm
+            onSubmit={(e) => handleSubmit(e, isLogIn ? 'login' : 'signup')}
+          >
+            <Typography align="center" variant="h6">
+              {formTitle}
+            </Typography>
             <TextField
-              type="password"
-              label="Potwierdź hasło"
+              type="email"
+              label="Email"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setConfirmPassword(e.target.value)
+                setEmail(e.target.value)
               }
               variant="outlined"
               size="small"
             />
-          )}
-          <Button type="submit" variant="contained" fullWidth>
-            {submitButtonText}
-          </Button>
-          {error && (
-            <Fade in={!!error}>
-              <Typography align="center" variant="body1" color="error">
-                {error}
-              </Typography>
-            </Fade>
-          )}
-        </AuthForm>
-        <SwitchBox>
-          {!isLogIn && (
-            <Button variant="text" onClick={() => viewLogin(true)} fullWidth>
-              Masz już konto? Zaloguj się
+            <TextField
+              type="password"
+              label="Hasło"
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
+              variant="outlined"
+              size="small"
+            />
+            {!isLogIn && (
+              <TextField
+                type="password"
+                label="Potwierdź hasło"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setConfirmPassword(e.target.value)
+                }
+                variant="outlined"
+                size="small"
+              />
+            )}
+            <Button type="submit" variant="contained" fullWidth>
+              {submitButtonText}
             </Button>
-          )}
-          {isLogIn && (
-            <Button variant="text" onClick={() => viewLogin(false)} fullWidth>
-              Nie masz konta? Zarejestruj się
-            </Button>
-          )}
-        </SwitchBox>
-      </Paper>
-    </AuthContainer>
+            {error && (
+              <Fade in={!!error}>
+                <Typography align="center" variant="body1" color="error">
+                  {error}
+                </Typography>
+              </Fade>
+            )}
+          </AuthForm>
+          <SwitchBox>
+            {!isLogIn && (
+              <Button variant="text" onClick={() => viewLogin(true)} fullWidth>
+                Masz już konto? Zaloguj się
+              </Button>
+            )}
+            {isLogIn && (
+              <Button variant="text" onClick={() => viewLogin(false)} fullWidth>
+                Nie masz konta? Zarejestruj się
+              </Button>
+            )}
+          </SwitchBox>
+        </Paper>
+      </AuthContainer>
+    </Box>
   );
 };
 

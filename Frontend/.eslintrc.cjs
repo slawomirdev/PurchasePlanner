@@ -28,5 +28,6 @@ module.exports = {
         unnamedComponents: "arrow-function",
       },
     ],
+    'max-len': ['error', { 'code': 170 }],
   },
 };

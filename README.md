@@ -1,4 +1,5 @@
 # PurchasePlanner - Aplikacja do planowania zakupów
+Autorzy: Sławomir Mendyka, Marcin Michalak, Wojciech Michalak
 
 PurchasePlanner to aplikacja internetowa do tworzenia i zarządzania listami zakupów. Aplikacja pozwala na tworzenie list, dodawanie do nich produktów, a także podsumowywanie wydatków w danym miesiącu.
 

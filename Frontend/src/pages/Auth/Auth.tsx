@@ -3,6 +3,8 @@ import { useCookies } from 'react-cookie';
 import { Button, TextField, Typography, Fade, Paper, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useNavigate } from 'react-router-dom';
+import api from '../../Api/api';
 import { AuthContainer, AuthForm, SwitchBox } from './Auth.styles';
 
 const Auth = () => {
@@ -14,6 +16,7 @@ const Auth = () => {
   const [error, setError] = useState<string | null>(null);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const navigate = useNavigate();
 
   const viewLogin = (status: boolean) => {
     setError(null);
@@ -30,16 +33,12 @@ const Auth = () => {
       return;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_SERVERURL}/${endpoint}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      }
+    const response = await api.post(
+        `/${endpoint}`,
+        { email, password },
     );
 
-    const data = await response.json();
+    const data = await response.data;
 
     if (data.detail) {
       setError(data.detail);
@@ -47,7 +46,7 @@ const Auth = () => {
       setCookie('Email', data.email);
       setCookie('AuthToken', data.token);
 
-      window.location.reload();
+      navigate('/')
     }
   };
 

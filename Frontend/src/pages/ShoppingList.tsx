@@ -33,7 +33,7 @@ const ShoppingList: React.FC = () => {
   const [newItemPrice, setNewItemPrice] = useState('');
   const [loading, setLoading] = useState(true);
   const [listName, setListName] = useState('');
-  console.log(items);
+
   useEffect(() => {
     api
       .get('/lists/' + listId + '/items')

@@ -7,6 +7,8 @@ import { ColorModeProvider } from './contexts/colorModeContext';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import { AppBar, Toolbar, Button, Typography } from '@mui/material';
 import { useCookies } from 'react-cookie';
+import Auth from "./pages/Auth/Auth";
+import PrivateRoute from "./utils/PrivateRoute";
 
 export const App = () => {
   const [cookies, _, removeCookie] = useCookies(['AuthToken']);
@@ -14,6 +16,7 @@ export const App = () => {
 
   const logOut = () => {
     removeCookie('AuthToken', { path: '/' });
+    removeCookie('AuthToken', { path: '/shopping-list' });
     window.location.reload();
   };
 
@@ -35,9 +38,12 @@ export const App = () => {
           </Toolbar>
         </AppBar>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route index element={<Home />} />
+            <Route path="shopping-list/:id" element={<ShoppingList />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
-          <Route path="/shopping-list/:id" element={<ShoppingList />} />
         </Routes>
       </BrowserRouter>
     </ColorModeProvider>
